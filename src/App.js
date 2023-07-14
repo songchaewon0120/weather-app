@@ -88,9 +88,22 @@ function App() {
       : null;
   }
 
+  const weatherColor = {
+    Clear: 'linear-gradient(to bottom, #A8E7FE, #F2E1A4, #F5E5C6)',
+    Clouds: 'linear-gradient(to bottom, #80A3C5, #A4A2AE, #F2F2F2)',
+    Rain: 'linear-gradient(to bottom, #A19EAB, #A19EAB, #F2F2F2)',
+    Drizzle: 'linear-gradient(to bottom, #B0DAFF, #F2D4A4, #F5E5C6)',
+    Thunderstorm: 'linear-gradient(to bottom, #0D0540, #D3B3F2, #F5E5C6)',
+    Snow: 'linear-gradient(to bottom, #C6E4E9, #C4EEF2, #F5E5C6)',
+    Mist: 'linear-gradient(to bottom, #CCB5A8, #D9C4B8, #9592A6)',
+    Haze: 'linear-gradient(to bottom, #CCB5A8, #D9C4B8, #9592A6)',
+    Fog: 'linear-gradient(to bottom, #CCB5A8, #D9C4B8, #9592A6)'
+  };
+  
+
   return (
     <Box>
-      <p className='text-weather'>한국 현재 날씨</p>
+      <div className='square'>
       <div className='btn-wrap'>
         {korea.map((country) => (
           <button
@@ -106,25 +119,29 @@ function App() {
         ))}
       </div>
 
-      <div className='weather-data-wrap'>
-        {weatherData && (
-          <div className='weather-data'>
-            <p>{koreanText}</p>
-            <p>{weatherKorean[weatherData.sky]}</p>
-            <p>{(weatherData.temp - 273.15).toFixed(1)}°C</p>
-            <p>{sunriseTime && sunriseTime.toTimeString().slice(0, 5)}</p>
-            <p>{sunsetTime && sunsetTime.toTimeString().slice(0, 5)}</p>
+      <div className={`content-wrap`} style={weatherData && { background: weatherColor[weatherData.sky] }}>
+      <p className='text-weather'>한국 현재 날씨</p>
+
+        <div className='weather-data-wrap'>
+          {weatherData && (
+            <div className='weather-data'>
+              <p>{koreanText}</p>
+              <p>{weatherKorean[weatherData.sky]}</p>
+              <p>{(weatherData.temp - 273.15).toFixed(1)}°C</p>
+              <p>{sunriseTime && sunriseTime.toTimeString().slice(0, 5)}</p>
+              <p>{sunsetTime && sunsetTime.toTimeString().slice(0, 5)}</p>
+            </div>
+          )}
+
+          <WeaterText />
+
+          <div className='weather-icon'>
+            <Icon />
           </div>
-        )}
 
-        <WeaterText />
-
-        <div className='weather-icon'>
-          <Icon />
         </div>
-
       </div>
-
+      </div>
     </Box>
   );
 }
